@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLS/SSL Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>TLS/SSL Checker</h1>
+        <form method="POST">
+            <label for="hostname">Enter Hostname:</label>
+            <input type="text" id="hostname" name="hostname" required>
+            <button type="submit">Check SSL/TLS</button>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                {% if result.error %}
+                    <p class="error">Error: {{ result.error }}</p>
+                {% else %}
+                    <h2>SSL/TLS Details for {{ result.hostname }}</h2>
+                    <ul>
+                        <li><strong>Subject:</strong> {{ result.cert_subject }}</li>
+                        <li><strong>Issuer:</strong> {{ result.cert_issuer }}</li>
+                        <li><strong>Valid From:</strong> {{ result.cert_valid_from }}</li>
+                        <li><strong>Valid Until:</strong> {{ result.cert_valid_until }}</li>
+                        <li><strong>Cipher Suite:</strong> {{ result.cipher_suite }}</li>
+                        <li><strong>Protocol Version:</strong> {{ result.protocol_version }}</li>
+                    </ul>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
